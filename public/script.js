@@ -3,6 +3,7 @@ var woodcost = 0;
 var stonecost = 0;
 var foodcost = 0;
 var selected_building = "wall";
+var placementz = 0;
 
 var resources = { wood: 5000, food: 2000, stone: 100 };
 
@@ -34,8 +35,11 @@ function spendresources() {
     $("#notification").text(
         "Wood: -" + woodcost + " Stone: -" + stonecost + " Food: -" + foodcost
     );
+    $("#notification").css('top', y);
+    $("#notification").css('left', x+55);
+    $("#notification").show(500).delay(500);
+
     $("#notification").fadeToggle(500);
-    $("#notification").fadeToggle(5000);
 }
 
 function build(xpos, ypos, building_type) {
@@ -51,7 +55,7 @@ function build(xpos, ypos, building_type) {
         buildings.push({
             x: xpos,
             y: ypos,
-            z: 180,
+            z: placementz,
             hp: building_hp,
             type: building_type,
         });
@@ -71,7 +75,9 @@ function displayBuildings() {
             buildings[i].y +
             "px; left: " +
             buildings[i].x +
-            "px;'></div>";
+            "px; transform: rotate(" +
+            buildings[i].z 
+            + "deg);'></div>";
     }
     document.getElementById("buildings").innerHTML = output;
     // console.log(output);
@@ -97,20 +103,14 @@ function getPos(e) {
 function stopTracking() {}
 
 document.onkeydown = function (e) {
-    if (e.keyCode == 39 && hero.ratex < 3) {
-        hero.ratex += 1;
+    if (e.keyCode == 82) {
+        placementz += 90
+        if (placementz == 360) {
+            placementz = 0
+        }
     }
-    if (e.keyCode == 38 && hero.ratey > -3) {
-        hero.ratey -= 1;
-    }
-    if (e.keyCode == 37 && hero.ratex > -3) {
-        hero.ratex -= 1;
-    }
-    if (e.keyCode == 40 && hero.ratey < 3) {
-        hero.ratey += 1;
-    }
-    if (e.keyCode == 32) {
-    }
+    console.log(placementz)
+    // console.log(e.keyCode)
 };
 
 $("#buildmenu").toggle();
@@ -141,13 +141,13 @@ $("#container").on("click", function () {
     }
     displayBuildings();
 });
+
 var selected_id = 1;
 $("#buildings").on("click", ".building", function (event) {
     event.stopPropagation();
     event.stopImmediatePropagation();
-    console.log("REEEEEE");
     $(this).addClass("selected");
-    $(".building").not(this).removeClass("selected");
+    $("div").not(this).removeClass("selected");
     selected_id = $(".selected").attr("unitid");
     $("#selected_unit").html(
         "<img src='" +
@@ -161,24 +161,73 @@ $("#buildings").on("click", ".building", function (event) {
     console.log(selected_id);
 });
 
+function selected() {
+    $(this).addClass("selected");
+    $("div").not(this).removeClass("selected");
+}
+
+// $("#buildmenu div").on("click", function (event) {
+//     event.stopPropagation();
+//     event.stopImmediatePropagation();
+//     console.log("REEEEEE");
+//     $(this).addClass("selected");
+//     $("div").not(this).removeClass("selected");
+//     // selected_id = $(".selected").attr("unitid");
+//     $("#selected_unit").html(
+//         "<img src='" +
+//         selected_building
+//         +".png'></img><h3>HP: " +
+            
+//             "</h3><h3>Type: " +
+//             selected_building +
+//             "</h3>"
+//     );
+// });
+
 $("#buildtower").on("click", function (e) {
-    e.stopPropagation();
-    console.log("reeeees");
     selected_building = "tower";
+    $(this).addClass("selected");
+    $("div").not(this).removeClass("selected");
+    // selected_id = $(".selected").attr("unitid");
+    $("#selected_unit").html(
+        "<img src='" +
+        selected_building
+        +".png'></img><h3>HP: " +
+            
+            "</h3><h3>Type: " +
+            selected_building +
+            "</h3>"
+    );
 });
 
 $("#buildwall").on("click", function (e) {
-    e.stopPropagation();
     selected_building = "wall";
+    $(this).addClass("selected");
+    $("div").not(this).removeClass("selected");
+    // selected_id = $(".selected").attr("unitid");
+    $("#selected_unit").html(
+        "<img src='" +
+        selected_building
+        +".png'></img><h3>HP: " +
+            
+            "</h3><h3>Type: " +
+            selected_building +
+            "</h3>"
+    );
+});
+
+$("#pizza").on("click", function (e) {
+    
+    resources.food += 1000;
 });
 
 $("#woodstock").on("click", function (e) {
-    e.stopPropagation();
+    
     resources.wood += 1000;
 });
 
 $("#quarry").on("click", function (e) {
-    e.stopPropagation();
+    
     resources.stone += 1000;
 });
 

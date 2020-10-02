@@ -64,7 +64,7 @@ body {
     text-align: center;
     /* color: antiquewhite; */
     background-color: aquamarine;
-    border: solid 5px black;
+    outline: solid 5px black;
 }
 
 #buildmenu {
@@ -79,7 +79,7 @@ body {
     text-align: center;
     /* color: antiquewhite; */
     background-color: rgb(251, 127, 255);
-    border: solid 5px black;
+    outline: solid 5px black;
     display: flex;
     justify-content: space-evenly;
 }
@@ -94,7 +94,7 @@ body {
     text-align: center;
     /* color: antiquewhite; */
     background-color: aquamarine;
-    border: solid 5px black;
+    outline: solid 5px black;
 }
 
 .selected {
@@ -123,6 +123,15 @@ body {
     background-color: crimson;
 }
 
+#pizza {
+    height: 40px;
+    width: 75px;
+    position: absolute;
+    top: 950px;
+    left: 450px;
+    background-color: crimson;
+}
+
 #woodstock {
     height: 40px;
     width: 75px;
@@ -145,8 +154,8 @@ body {
     color: crimson;
     font-size: larger;
     position: absolute;
-    top: 250px;
-    left: 500px;
+    /* top: 250px; */
+    /* left: 500px; */
     display: none;
 }
 
