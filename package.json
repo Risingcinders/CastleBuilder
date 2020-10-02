@@ -1,0 +1,26 @@
+{
+  "name": "1942game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "engines": {
+    "node": "12.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Risingcinders/1942game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Risingcinders/1942game/issues"
+  },
+  "homepage": "https://github.com/Risingcinders/1942game#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

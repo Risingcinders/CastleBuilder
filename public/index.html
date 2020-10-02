@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Castle Building Game</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div
+            id="container"
+            onmousemove="getPos(event)"
+            onmouseout="stopTracking()"
+        ></div>
+        <div id="resources"></div>
+        <div id="enemies"></div>
+
+        <div id="buildmenu">
+            <div id="buildtower">Tower
+                <img src="tower.png" alt="">
+            </div>
+            <div id="buildwall">Wall
+                <img src="wall.png" alt="">
+            </div>
+        </div>
+        <div id='selected_unit'></div>
+        <div id='woodstock'>Woodstock</div>
+        <div id='quarry' >Quarry</div>
+        <div id= 'notification'></div>
+        <div id="buildings"></div>
+        <p id="displayArea"></p>
+        <div id="build">Build</div>
+        <div id="menu">Pause</div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,167 @@
+* {
+    color: coral;
+    font-family: fantasy;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: black;
+}
+
+#container {
+    background: url("moss-texture.png");
+    width: 1000px;
+    height: 1000px;
+    /* cursor: url(woodwall.png), auto;	 */
+}
+
+#displayArea {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    float: left;
+    width: auto;
+    display: none;
+    position: absolute;
+    top: 0;
+}
+
+#mode {
+    position: absolute;
+    height: 50px;
+    width: 100px;
+    background-color: cadetblue;
+}
+
+.building {
+    /* background-color: tomato; */
+    /* border: solid 1px black; */
+    position: absolute;
+    color: white;
+    width: 46px;
+    height: 46px;
+}
+.wall {
+    background: url(wall.png);
+    width: 50px;
+    height: 50px;
+}
+
+.tower {
+    background: url(tower.png);
+    width: 50px;
+    height: 50px;
+}
+
+#build {
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 900px;
+    left: 50px;
+    text-align: center;
+    /* color: antiquewhite; */
+    background-color: aquamarine;
+    border: solid 5px black;
+}
+
+#buildmenu {
+    padding: 5px;
+    min-width: 150px;
+    /* width: 500px; */
+    height: 90px;
+    position: absolute;
+    /* display: none; */
+    top: 800px;
+    left: 50px;
+    text-align: center;
+    /* color: antiquewhite; */
+    background-color: rgb(251, 127, 255);
+    border: solid 5px black;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#menu {
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 900px;
+    left: 200px;
+    text-align: center;
+    /* color: antiquewhite; */
+    background-color: aquamarine;
+    border: solid 5px black;
+}
+
+.selected {
+    outline: 1px solid white;
+    /* background-color: darkblue; */
+}
+
+#buildmenu div {
+    height: 70px;
+    width: 100px;
+    background-color: cornflowerblue;
+    margin: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#resources {
+    height: 40px;
+    width: 250px;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    background-color: crimson;
+}
+
+#woodstock {
+    height: 40px;
+    width: 75px;
+    position: absolute;
+    top: 950px;
+    left: 550px;
+    background-color: crimson;
+}
+
+#quarry {
+    height: 40px;
+    width: 75px;
+    position: absolute;
+    top: 950px;
+    left: 650px;
+    background-color: crimson;
+}
+
+#notification {
+    color: crimson;
+    font-size: larger;
+    position: absolute;
+    top: 250px;
+    left: 500px;
+    display: none;
+}
+
+#selected_unit {
+    background-color: darkblue;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 850px;
+    left: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+/* pointer-events: none; */
