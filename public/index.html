@@ -12,26 +12,27 @@
             onmousemove="getPos(event)"
             onmouseout="stopTracking()"
         ></div>
-        <div id="resources"></div>
+        <div id="resources" class='overlay'></div>
         <div id="enemies"></div>
 
         <div id="buildmenu">
-            <div id="buildtower">Tower
+            <div id="buildtower" bldgtype="tower">Tower
                 <img src="tower.png" alt="">
             </div>
-            <div id="buildwall">Wall
+            <div id="buildwall" bldgtype="wall">Wall
                 <img src="wall.png" alt="">
             </div>
         </div>
-        <div id='selected_unit'></div>
-        <div id='pizza'>Pepperoni Pizza</div>
-        <div id='woodstock'>Woodstock</div>
-        <div id='quarry' >Quarry</div>
+        <div id='selected_unit' class='overlay'></div>
+        <div id='pizza' class='resourcebtn overlay'>Pepperoni Pizza</div>
+        <div id='woodstock' class='resourcebtn overlay'>Woodstock</div>
+        <div id='quarry' class='resourcebtn overlay'>Quarry</div>
         <div id= 'notification'></div>
         <div id="buildings"></div>
-        <p id="displayArea"></p>
-        <div id="build">Build</div>
-        <div id="menu">Pause</div>
+        <div id="prebuild" class = "building"></div>
+        <p id="displayArea "></p>
+        <div id="build" class='overlay'>Build</div>
+        <div id="menu" class='overlay'>Pause</div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="script.js"></script>
     </body>
