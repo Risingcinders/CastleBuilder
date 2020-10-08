@@ -1,4 +1,6 @@
 var build_toggle = 0;
+var console_toggle = 0;
+var ccounter = 0;
 var bcounter = 0;
 var score = 0;
 var woodcost = 0;
@@ -6,36 +8,108 @@ var stonecost = 0;
 var foodcost = 0;
 var selected_building = "wall";
 var placementz = 0;
+var buildingcount = { wall: 0, tower: 0, flag: 0 };
 
 // var resources = { wood: 5000, food: 2000, stone: 100 };
 var resources = { wood: 5000000, food: 200000, stone: 100000 };
 
 var building_types = [
-    { btype: "wall", cost: { wood: 500, food: 0, stone: 0 }, hp: 3 },
-    { btype: "tower", cost: { wood: 1000, stone: 10, food: 0 }, hp: 5 },
+    {
+        btype: "wall",
+        cost: { wood: 500, food: 0, stone: 0, limit: 9999 },
+        hp: 3,
+    },
+    {
+        btype: "tower",
+        cost: { wood: 1000, stone: 10, food: 0, limit: 9999 },
+        hp: 5,
+    },
+    { btype: "flag", cost: { wood: 0, stone: 0, food: 0, limit: 1 }, hp: 1 },
 ];
 
-var buildings = [];
+buildingobj = building_types.find((a) => a.btype == selected_building);
+
+var buildings = [{ x: 650, y: 650, z: 0, hp: 1, type: "flag" }];
+var units = [
+    {
+        utype: "goblin",
+        x: 500,
+        y: 200,
+        z: 0,
+        hp: 4,
+        team: "enemy",
+        speed: 1,
+        attack: 1,
+    },{
+        utype: "goblin",
+        x: 500,
+        y: 1000,
+        z: 0,
+        hp: 4,
+        team: "enemy",
+        speed: 2,
+        attack: 1,
+    },{
+        utype: "goblin",
+        x: 500,
+        y: 900,
+        z: 0,
+        hp: 4,
+        team: "enemy",
+        speed: 1,
+        attack: 1,
+    },{
+        utype: "goblin",
+        x: 300,
+        y: 700,
+        z: 0,
+        hp: 4,
+        team: "enemy",
+        speed: 1,
+        attack: 1,
+    },
+];
 
 function getcost(item) {
     woodcost = item.cost.wood;
     stonecost = item.cost.stone;
     foodcost = item.cost.food;
+    limitcount = item.cost.limit;
 }
 
 function checkcost() {
     return (
         woodcost <= resources.wood &&
         stonecost <= resources.stone &&
-        foodcost <= resources.food
+        foodcost <= resources.food &&
+        limitcount > buildingcount[selected_building]
     );
+}
+
+function notify(note) {
+    $("#consoletab p")
+        .first()
+        .append("<p>" + note + "</p>");
+    // $("#notification").text(note);
+    // $("#notification").css("top", y);
+    // $("#notification").css("left", x + 55);
+    // $("#notification").show(500).delay(500);
+    // $("#notification").fadeToggle(500);
+}
+
+function buildingcounter() {
+    buildingcount = { wall: 0, tower: 0, flag: 0 };
+    for (i = 0; i < buildings.length; i++) {
+        buildingcount[buildings[i].type]++;
+    }
+    // console.log(buildingcount);
 }
 
 function spendresources() {
     resources.wood -= woodcost;
     resources.food -= foodcost;
     resources.stone -= stonecost;
-    $("#notification").text(
+    notify(
         "Wood: -" +
             woodcost +
             " \nStone: -" +
@@ -43,10 +117,7 @@ function spendresources() {
             " \nFood: -" +
             foodcost
     );
-    $("#notification").css("top", y);
-    $("#notification").css("left", x + 55);
-    $("#notification").show(500).delay(500);
-    $("#notification").fadeToggle(500);
+    updateResources();
 }
 
 function build(xpos, ypos, building_type) {
@@ -54,10 +125,10 @@ function build(xpos, ypos, building_type) {
         if (building_types[i].btype == building_type) {
             getcost(building_types[i]);
             building_hp = building_types[i].hp;
+            buildingcounter();
             break;
         }
     }
-
     if (checkcost()) {
         buildings.push({
             x: xpos,
@@ -67,6 +138,10 @@ function build(xpos, ypos, building_type) {
             type: building_type,
         });
         spendresources();
+    } else if (limitcount <= buildingcount[selected_building]) {
+        notify("You cannot have any more of this building");
+    } else {
+        notify("Insufficient Resources");
     }
 }
 
@@ -88,6 +163,55 @@ function displayBuildings() {
     }
     document.getElementById("buildings").innerHTML = output;
     // console.log(output);
+}
+
+function displayUnits() {
+    var output = "";
+    for (i = 0; i < units.length; i++) {
+        output +=
+            "<div class='unit " +
+            units[i].utype +
+            "' unitid='" +
+            i +
+            "' style='top: " +
+            units[i].y +
+            "px; left: " +
+            units[i].x +
+            "px; transform: rotate(" +
+            units[i].z +
+            "deg);'></div>";
+    }
+    document.getElementById("units").innerHTML = output;
+    // console.log(output);
+}
+
+function moveUnits() {
+    theflag = buildings.find((a) => a.type == "flag");
+    for (i = 0; i < units.length; i++) {
+        delta_x = units[i].x - theflag.x;
+        delta_y = units[i].y - theflag.y;
+        units[i].z = (Math.atan2(delta_y, delta_x) * 180) / Math.PI;
+        units[i].x -= Math.cos(Math.atan2(delta_y, delta_x))*units[i].speed
+        units[i].y -= Math.sin(Math.atan2(delta_y, delta_x))*units[i].speed
+        //  (units[i].speed * delta_x) / Math.abs(delta_x + 1);
+        // units[i].y -= (units[i].speed * delta_y) / Math.abs(delta_y + 1);
+        
+    }
+}
+
+
+function circleploters() {
+    theflag = buildings.find((a) => a.type == "flag");
+    for (i = 0; i < units.length; i++) {
+        delta_x = units[i].x - theflag.x;
+        delta_y = units[i].y - theflag.y;
+        units[i].z = (Math.atan2(delta_y, delta_x) * 180) / Math.PI;
+        units[i].x -= Math.sin(Math.atan2(delta_y, delta_x))*units[i].speed
+        units[i].y += Math.cos(Math.atan2(delta_y, delta_x))*units[i].speed
+        //  (units[i].speed * delta_x) / Math.abs(delta_x + 1);
+        // units[i].y -= (units[i].speed * delta_y) / Math.abs(delta_y + 1);
+        
+    }
 }
 
 function ghost_building() {
@@ -135,6 +259,7 @@ document.onkeydown = function (e) {
 };
 
 $("#buildmenu").toggle();
+$("#consoletab").toggle();
 
 function gamepaused() {
     console.log("pancake");
@@ -142,18 +267,17 @@ function gamepaused() {
 }
 
 $("#menu").hover(function () {
-    gamepaused();
+    // gamepaused();
 });
-
 
 $("#build").click(function () {
     $("#buildmenu").toggle();
     bcounter++;
     build_toggle = bcounter % 2;
-    if (build_toggle != 1) { 
-        $("#build").css("filter", 'grayscale(50%)');
+    if (build_toggle != 1) {
+        $("#build").css("filter", "grayscale(50%)");
     } else {
-        $("#build").css("filter", 'none');
+        $("#build").css("filter", "none");
     }
     console.log(build_toggle);
 });
@@ -185,13 +309,16 @@ $("#buildings").on("click", ".building", function (event) {
 });
 
 $("#buildmenu div").on("click", function (event) {
-    selected_building = $(this).attr('bldgtype');
+    selected_building = $(this).attr("bldgtype");
+    buildingobj = building_types.find((a) => a.btype == selected_building);
     $(this).addClass("selected");
     $("div").not(this).removeClass("selected");
+
     $("#selected_unit").html(
         "<img src='" +
             selected_building +
             ".png'></img><h3>HP: " +
+            buildingobj.hp +
             "</h3><h3>Type: " +
             selected_building +
             "</h3>"
@@ -211,11 +338,31 @@ $("#quarry").on("click", function (e) {
 });
 
 function gameLoop() {
-    // moveEnemies();
-    updateResources();
+    displayUnits();
+    moveUnits();
+    // updateResources();
     ghost_building();
 }
 
-setInterval(gameLoop, 10);
+setInterval(gameLoop, 25);
 
+updateResources();
 displayBuildings();
+
+$("#littletab").click(function () {
+    $("#consoletab").toggle();
+    console_toggle++;
+    if (console_toggle % 2 != 1) {
+        // original position
+        // $("#littletab").css('left',500)
+        $("#selected_unit").css("left", 1650);
+        $("#littletab img").css("transform", "rotate(0deg)");
+    } else {
+        //counsoles out
+        // $("#littletab").css('left',200)
+        $("#littletab img").css("transform", "rotate(180deg)");
+
+        $("#selected_unit").css("left", 1300);
+    }
+    console.log(console_toggle);
+});

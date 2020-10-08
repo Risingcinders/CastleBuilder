@@ -19,6 +19,7 @@ body {
     background: url("moss-texture.png");
     width: 1800px;
     height: 1000px;
+    background-size: 20px, 20px;
 }
 
 /* 
@@ -34,8 +35,15 @@ body {
     width: 50px;
     height: 50px;
 }
+
 .wall {
     background: url(wall.png);
+    width: 50px;
+    height: 50px;
+}
+
+.flag {
+    background: url(flag.png);
     width: 50px;
     height: 50px;
 }
@@ -58,7 +66,7 @@ body {
     width: 100px;
     height: 100px;
     position: absolute;
-    top: 900px;
+    top: 870px;
     left: 50px;
     text-align: center;
     background-color: var(--pribackground);
@@ -67,34 +75,31 @@ body {
     filter: grayscale(50%);
 }
 
-#buildmenu {
-    padding: 5px;
-    min-width: 150px;
-    /* width: 500px; */
-    height: 90px;
-    position: absolute;
-    /* display: none; */
-    top: 800px;
-    left: 50px;
-    text-align: center;
-    /* color: antiquewhite; */
-    background-color: var(--secbackground);
-    outline: solid 5px var(--accent);
-    display: flex;
-    justify-content: space-evenly;
-}
-
 #menu {
     padding: 5px;
     width: 100px;
     height: 100px;
     position: absolute;
-    top: 900px;
+    top: 870px;
     left: 200px;
     text-align: center;
     /* color: antiquewhite; */
     background-color: var(--pribackground);
     outline: solid 5px var(--accent);
+}
+
+#buildmenu {
+    padding: 5px;
+    min-width: 150px;
+    height: 90px;
+    position: absolute;
+    top: 750px;
+    left: 50px;
+    text-align: center;
+    background-color: var(--secbackground);
+    outline: solid 5px var(--accent);
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .selected {
@@ -179,5 +184,37 @@ body {
 
 .overlay {
     box-shadow: 0px 0px 10px 2px black;
+}
 
+#littletab {
+    position: absolute;
+    top: 750px;
+    left: 1750px;
+    height: 100px;
+    width: 50px;
+    background-color: coral;
+    /* background-image: url(chevron.png); */
+}
+
+#consoletab {
+    position: absolute;
+    /* display: none; */
+    top: 850px;
+    left: 1450px;
+    height: 150px;
+    width: 350px;
+    background-color: palegreen;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+}
+
+.unit {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
+
+.goblin {
+    background-color: palevioletred;
 }
