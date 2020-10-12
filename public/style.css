@@ -216,5 +216,6 @@ body {
 }
 
 .goblin {
-    background-color: palevioletred;
+    /* background-color: palevioletred; */
+    background-image: url(goblin1.png);
 }

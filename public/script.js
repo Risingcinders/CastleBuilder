@@ -8,6 +8,8 @@ var stonecost = 0;
 var foodcost = 0;
 var selected_building = "wall";
 var placementz = 0;
+var increment = 1;
+var animate = 1;
 var buildingcount = { wall: 0, tower: 0, flag: 0 };
 
 // var resources = { wood: 5000, food: 2000, stone: 100 };
@@ -167,6 +169,12 @@ function displayBuildings() {
 
 function displayUnits() {
     var output = "";
+    increment++;
+    if (increment%10 == 0) {
+        animate = 1;
+    } else if (increment%5 ==0 ){
+        animate = 2
+    }
     for (i = 0; i < units.length; i++) {
         output +=
             "<div class='unit " +
@@ -178,8 +186,10 @@ function displayUnits() {
             "px; left: " +
             units[i].x +
             "px; transform: rotate(" +
-            units[i].z +
-            "deg);'></div>";
+            (units[i].z - 90)  +
+            "deg); background-image: url(goblin" +
+            animate
+            + ".png);'></div>";
     }
     document.getElementById("units").innerHTML = output;
     // console.log(output);
